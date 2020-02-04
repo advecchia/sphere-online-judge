@@ -10,17 +10,27 @@ const int MAX_CEILING_NUMBER=1000000000;
 const int MAX_SUBTRACTION_NUMBER=100000;
 
 /**
- * Find all primes between some interval.
+ * Print all prime numbers between some interval.
  */
 void printPrimes(int min, int max) {
-    vector<int> primes;
-    // Divisivel apenas por 1 e por ele mesmo
-    for (int i=min; i<max; i++) {
-        //primes.push_back(i);
-    }
+    bool isPrime;
+    for (int prime=min; prime<=max; prime++) {
+        if (prime == 1 || prime == 0) {
+            continue; // lower bound for non natural primes
+        }
 
-    for (auto prime : primes) {
-        cout << prime << endl;
+        isPrime = true;
+        // Look just on lesser half part of numbers
+        for (int divider=2; divider <= prime/2; ++divider) {
+            if (prime % divider == 0) {
+                isPrime = false;
+                break;
+            }
+        }
+
+        if (isPrime) {
+            cout << prime << endl;
+        }
     }
 }
 
@@ -61,14 +71,14 @@ int main() {
 
     for (int i=0; i < testcaseNumber; i++) {
         cin >> min >> max;
-
         validateInputs(min, max);
+
+        // Fill the test case list
         pair<int, int> testPair (min, max);
         testCases.push_back(testPair);
     }
 
     for (auto it : testCases) {
-        //cout << it.first << " " << it.second;
         printPrimes(it.first, it.second);
         cout << endl;
     }
